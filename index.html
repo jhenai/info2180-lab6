@@ -1,0 +1,36 @@
+<!DOCtype html>
+<head></head>
+<body>
+    <p>click search</p>
+    <button id= "search" type="button">Search!</button>
+    
+    <script>
+       document.getElementById("search").addEventListener("click",function(){
+           
+           var httpRequest;
+           if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
+              httpRequest = new XMLHttpRequest();
+               
+           }
+           httpRequest.onreadystatechange = function(){
+             
+               if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                   if (httpRequest.status === 200) {
+                       alert(httpRequest.responseText);
+               }
+               else{
+                   alert("nooooooooo!");
+               }
+               
+           };
+        }; 
+          httpRequest.open('GET', 'https://lab6-jhenai.c9users.io/request.php?q=definition', true);
+          httpRequest.send(null);
+       });
+           </script>
+           
+   
+        
+ 
+</body>
+ </html>
