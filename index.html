@@ -1,12 +1,18 @@
 <!DOCtype html>
 <head></head>
 <body>
-    <p>click search</p>
-    <button id= "search" type="button">Search!</button>
+    <div id="webDefHeading">Web Dictionary</div>
+    
+    <p>Look up the definition of a word (e.g. ajax, html, bar, Javascript, css)</p>
+   
+    <input type="text" name="searchbar" id="searchitem">    
+    <button id= "searchButton" type="button">Search!</button>
+    <div id=resultHeading>Result</div>
+    <div id="response"></div>
     
     <script>
-       document.getElementById("search").addEventListener("click",function(){
-           
+       document.getElementById("searchButton").addEventListener("click",function(){
+           var item= document.getElementById("searchitem").value;
            var httpRequest;
            if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
               httpRequest = new XMLHttpRequest();
@@ -16,7 +22,7 @@
              
                if (httpRequest.readyState === XMLHttpRequest.DONE) {
                    if (httpRequest.status === 200) {
-                       alert(httpRequest.responseText);
+                       document.getElementById("response").innerHTML = (httpRequest.responseText);
                }
                else{
                    alert("nooooooooo!");
@@ -24,9 +30,12 @@
                
            };
         }; 
-          httpRequest.open('GET', 'https://lab6-jhenai.c9users.io/request.php?q=definition', true);
+          console.log(item);
+          var url= 'https://lab6-jhenai.c9users.io/request.php?q=' + item;
+          httpRequest.open('GET', url , true);
           httpRequest.send(null);
        });
+          
            </script>
            
    
