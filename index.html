@@ -6,7 +6,8 @@
     <p>Look up the definition of a word (e.g. ajax, html, bar, Javascript, css)</p>
    
     <input type="text" name="searchbar" id="searchitem">    
-    <button id= "searchButton" type="button">Search!</button>
+    <button id= "searchButton" type="button">Search</button>
+    <button id= "allDef" type="button">Get All Definitions</button>
     <div id=resultHeading>Result</div>
     <div id="response"></div>
     
@@ -33,6 +34,44 @@
           console.log(item);
           var url= 'https://lab6-jhenai.c9users.io/request.php?q=' + item;
           httpRequest.open('GET', url , true);
+          httpRequest.send(null);
+       });
+       
+        document.getElementById("allDef").addEventListener("click",function(){
+          //console.log('all defs clicked');
+          // var item= document.getElementById("searchitem").value;
+           var httpRequest;
+           if (window.XMLHttpRequest) { // Mozilla, Safari, IE7+ ...
+              httpRequest = new XMLHttpRequest();
+               
+           }
+           httpRequest.onreadystatechange = function(){
+             
+               if (httpRequest.readyState === XMLHttpRequest.DONE) {
+                   if (httpRequest.status === 200) {
+                       
+                   
+                      
+                 var doc = httpRequest.responseXML;
+                 console.log(doc.getElementsByTagName("definition").length);
+                 var x;
+                for(var i=0; i<3; i++){
+                   
+                  x += "<li> <h3>" + doc.getElementsByTagName("definition")[i].getAttribute('name')+ "</h3> <p>" + doc.getElementsByTagName("definition")[i].childNodes[0].nodeValue + "</p><p> - " +  doc.getElementsByTagName("definition")[i].getAttribute('author') + "</p></li>";
+                }                
+                 console.log(httpRequest.responseXML);
+                 document.getElementById("response").innerHTML = "<ol>" + x + "</ol>";
+           
+                } else {
+                  alert('There was a problem with the request.');
+                }
+               
+           };
+        }; 
+       
+          var url= 'https://lab6-jhenai.c9users.io/request.php?q=&all=true';
+          httpRequest.open('GET', url);
+          httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
           httpRequest.send(null);
        });
           
